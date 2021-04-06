@@ -8,7 +8,7 @@ public:
     virtual void send(std::string topic) =  0;
     virtual void register_provider(std::string topic) = 0;
     virtual void unregister_provider(std::string topic) = 0;
-    ~publish_interface() =default;
+    virtual ~publish_interface() = default;
 };
 
 #endif
