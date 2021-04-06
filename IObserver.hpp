@@ -9,11 +9,11 @@ public:
   virtual ~IObserver()= default;
 };
 
-class observer_interface{
+class observe_interface{
 public:
     virtual void register_observer(std::string topic, std::shared_ptr<IObserver> observer ) = 0;
     virtual void unregister_observer(std::string topic, std::shared_ptr<IObserver> observer ) = 0;
-    virtual ~observer_interface() = default;
+    virtual ~observe_interface() = default;
 };
 
 #endif

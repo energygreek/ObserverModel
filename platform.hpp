@@ -4,7 +4,7 @@
 #include "IObserver.hpp"
 #include "IProvider.hpp"
 
-class Platform: public publish_interface, public observer_interface{
+class Platform: public publish_interface, public observe_interface{
     std::map<std::string, std::vector<std::shared_ptr<IObserver>>> m_subscribtion;
 public:
     void register_provider(std::string topic) override;

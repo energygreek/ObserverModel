@@ -4,7 +4,7 @@
 
 class TestObserver: public IObserver, public std::enable_shared_from_this<TestObserver>{
 public:
-    TestObserver(std::shared_ptr<observer_interface> ptr, std::string topic):m_platform(ptr), m_topic(topic){
+    TestObserver(std::shared_ptr<observe_interface> ptr, std::string topic):m_platform(ptr), m_topic(topic){
     }
     ~TestObserver(){
     }
@@ -19,6 +19,6 @@ public:
     }
 
 private:
-    std::shared_ptr<observer_interface> m_platform;
+    std::shared_ptr<observe_interface> m_platform;
     std::string m_topic;
 };
