@@ -1,9 +1,9 @@
 #include "IProvider.hpp"
-#include <bits/stdint-uintn.h>
+#include <memory>
 
 class TestProvider{
 public:
-    TestProvider(publish_interface* ptr, std::string topic):m_platform(ptr), m_topic(topic){
+    TestProvider(std::shared_ptr<publish_interface> ptr, std::string topic):m_platform(ptr), m_topic(topic){
         m_platform->register_provider(m_topic);
     }
     ~TestProvider(){
@@ -15,6 +15,6 @@ public:
     }
 
 private:
-    publish_interface* m_platform;
+    std::shared_ptr<publish_interface> m_platform;
     std::string m_topic;
 };

@@ -1,35 +1,36 @@
 #include "platform.hpp"
 #include <algorithm>
 
-void platform::register_provider(std::string topic){
-    m_subscribtion.emplace(topic, std::vector<observer_callback>());
+void Platform::register_provider(std::string topic){
+    m_subscribtion.emplace(topic, std::vector<std::shared_ptr<IObserver>>());
 }
-void platform::unregister_provider(std::string topic){
+void Platform::unregister_provider(std::string topic){
     auto it = m_subscribtion.find(topic);
     if(it != m_subscribtion.end()){
         m_subscribtion.erase(it);
     }
 }
-void platform::register_observer(std::string topic, observer_callback callback){
+void Platform::register_observer(std::string topic, std::shared_ptr<IObserver> observer ){
+
     auto it = m_subscribtion.find(topic);
     if(it != m_subscribtion.end()){
-        it->second.emplace_back(callback);
+        it->second.emplace_back(observer);
     }
 }
-void platform::unregister_observer(std::string topic, observer_callback callback ){
+void Platform::unregister_observer(std::string topic, std::shared_ptr<IObserver> observer ) {
+        
     auto it = m_subscribtion.find(topic);
     if(it != m_subscribtion.end()){
-        // auto call = std::find_if(it->second.begin(), it->second.end(), [&callback](auto cb){return cb == callback;});
-        // if(call != it->second.end()){
-        //     it->second.erase(call);
-        // }
+        auto result = std::find(it->second.begin(), it->second.end(), observer);
+        it->second.erase(result);
     }
 }
-void platform::send(std::string topic) {
+void Platform::send(std::string topic) {
+
     auto it = m_subscribtion.find(topic);
     if(it != m_subscribtion.end()){
-        for(auto cb: it->second){
-            cb();
+        for(auto &observer: it->second){
+            observer->callback();
         }
     }
 }

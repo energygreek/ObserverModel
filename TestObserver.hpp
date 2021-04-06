@@ -1,17 +1,24 @@
 #include "IObserver.hpp"
-#include <sys/types.h>
 #include <iostream>
+#include <memory>
 
-class TestObserver{
+class TestObserver: public IObserver, public std::enable_shared_from_this<TestObserver>{
 public:
-    TestObserver(observer_interface* ptr, std::string topic):m_platform(ptr), m_topic(topic){
-        m_platform->register_observer(m_topic,  [](){ std::cout << "new toptic message revieved\n";});
+    TestObserver(std::shared_ptr<observer_interface> ptr, std::string topic):m_platform(ptr), m_topic(topic){
     }
     ~TestObserver(){
-        m_platform->unregister_observer(m_topic,  [](){ std::cout << "new toptic message revieved\n";});
+    }
+    void register_topic(){
+        m_platform->register_observer(m_topic,  shared_from_this());
+    }
+    void unregister_topic(){
+        m_platform->unregister_observer(m_topic, shared_from_this());
+    }
+    void callback() override{
+        std::cout << "new toptic message revieved\n";
     }
 
 private:
-    observer_interface* m_platform;
+    std::shared_ptr<observer_interface> m_platform;
     std::string m_topic;
 };

@@ -1,13 +1,17 @@
 #ifndef IOBSERVER_
 #define IOBSERVER_
-#include <functional>
 #include <string>
+#include <memory>
+
+class IObserver{
+public:
+  virtual void callback() = 0;
+};
 
 class observer_interface{
 public:
-    using observer_callback = std::function<void(void)>;
-    virtual void register_observer(std::string topic, observer_callback callback ) = 0;
-    virtual void unregister_observer(std::string topic, observer_callback callback ) = 0;
+    virtual void register_observer(std::string topic, std::shared_ptr<IObserver> observer ) = 0;
+    virtual void unregister_observer(std::string topic, std::shared_ptr<IObserver> observer ) = 0;
     ~observer_interface() =default;
 };
 
