@@ -1,0 +1,12 @@
+{
+    "C_Cpp.autocomplete": "Disabled",
+    "C_Cpp.codeFolding": "Disabled",
+    "C_Cpp.configurationWarnings": "Disabled",
+    "C_Cpp.autoAddFileAssociations": false,
+
+    "cmake.generator": "Unix Makefiles",
+    "clangd.arguments": [
+        "--background-index=0",
+        "--clang-tidy-checks=*,-llvmlibc-*,-constexpr_var_requires_const_init,-modernize-*,-objc-*,-mpi-*,-fuchsia-*,-android-*,-llvm-*,-google-runtime-references,-member_decl_does_not_match,-hicpp-signed-bitwise"
+    ],
+}
